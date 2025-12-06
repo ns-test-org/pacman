@@ -231,7 +231,7 @@ export default function PacmanGame() {
         {(gameOver || gameWon) && (
           <div className="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center">
             <div className="text-white text-3xl font-bold mb-4">
-              {gameWon ? '🎉 You Won!' : '💀 Game Over!'}
+              {gameWon ? '🎉 You Won!' : '💀💀 Game Over 💀💀'}
             </div>
             <div className="text-white text-xl mb-4">
               Final Score: {score}
@@ -253,4 +253,5 @@ export default function PacmanGame() {
     </div>
   );
 }
+
 
