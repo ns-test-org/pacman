@@ -1,84 +1,175 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-const slogans = [
-  "Turn chats into apps",
-  "Prompt. Ship. Repeat.",
-  "Build anything from a chat",
-  "Ideas → Apps, instantly",
-  "From zero to MVP in minutes",
-  "Your cofounder in the command line",
-  "Draft, iterate, deploy",
-  "Ship faster than you can type",
-  "Design in text, deliver in code",
-  "Dream it. Prompt it. Run it.",
-  "Chat-native app building",
-  "From prompt to product",
-  "One prompt, infinite apps",
-  "Stop scaffolding. Start shipping.",
-  "Prototype at the speed of thought",
-  "Make conversations executable"
-];
+export default function Calculator() {
+  const [display, setDisplay] = useState('0');
+  const [previousValue, setPreviousValue] = useState<number | null>(null);
+  const [operation, setOperation] = useState<string | null>(null);
+  const [waitingForOperand, setWaitingForOperand] = useState(false);
 
-export default function Landing() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+  const inputDigit = (digit: string) => {
+    if (waitingForOperand) {
+      setDisplay(digit);
+      setWaitingForOperand(false);
+    } else {
+      setDisplay(display === '0' ? digit : display + digit);
+    }
+  };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % slogans.length);
-        setIsVisible(true);
-      }, 400);
-    }, 2800);
+  const inputDecimal = () => {
+    if (waitingForOperand) {
+      setDisplay('0.');
+      setWaitingForOperand(false);
+    } else if (display.indexOf('.') === -1) {
+      setDisplay(display + '.');
+    }
+  };
 
-    return () => clearInterval(interval);
-  }, []);
+  const clear = () => {
+    setDisplay('0');
+    setPreviousValue(null);
+    setOperation(null);
+    setWaitingForOperand(false);
+  };
+
+  const performOperation = (nextOperation: string) => {
+    const inputValue = parseFloat(display);
+
+    if (previousValue === null) {
+      setPreviousValue(inputValue);
+    } else if (operation) {
+      const currentValue = previousValue || 0;
+      let newValue = currentValue;
+
+      switch (operation) {
+        case '+':
+          newValue = currentValue + inputValue;
+          break;
+        case '-':
+          newValue = currentValue - inputValue;
+          break;
+        case '×':
+          newValue = currentValue * inputValue;
+          break;
+        case '÷':
+          newValue = currentValue / inputValue;
+          break;
+      }
+
+      setDisplay(String(newValue));
+      setPreviousValue(newValue);
+    }
+
+    setWaitingForOperand(true);
+    setOperation(nextOperation);
+  };
+
+  const handleEquals = () => {
+    const inputValue = parseFloat(display);
+
+    if (previousValue !== null && operation) {
+      let newValue = previousValue;
+
+      switch (operation) {
+        case '+':
+          newValue = previousValue + inputValue;
+          break;
+        case '-':
+          newValue = previousValue - inputValue;
+          break;
+        case '×':
+          newValue = previousValue * inputValue;
+          break;
+        case '÷':
+          newValue = previousValue / inputValue;
+          break;
+      }
+
+      setDisplay(String(newValue));
+      setPreviousValue(null);
+      setOperation(null);
+      setWaitingForOperand(true);
+    }
+  };
+
+  const Button = ({ children, onClick, className = '' }: { children: React.ReactNode; onClick: () => void; className?: string }) => (
+    <button
+      onClick={onClick}
+      className={`h-16 rounded-lg font-semibold text-xl transition-all hover:scale-105 active:scale-95 ${className}`}
+    >
+      {children}
+    </button>
+  );
 
   return (
-    <div className="relative h-[100dvh] w-full overflow-hidden bg-black text-white">
-      {/* Enhanced animated aurora background layers */}
-      <div className="absolute inset-0 bg-aurora-layer-1" />
-      <div className="absolute inset-0 bg-aurora-layer-2" />
-      <div className="absolute inset-0 bg-aurora-layer-3" />
-      
-      {/* Floating particles overlay */}
-      <div className="absolute inset-0 bg-particles" />
-      
-      {/* Main content - centered */}
-      <main className="relative z-10 h-full flex flex-col items-center justify-center px-6">
-        <h1 className="text-center text-[clamp(28px,6vw,64px)] font-medium tracking-tight mb-4">
-          Turn Chats into Apps
-        </h1>
-        
-        {/* Rotating slogans */}
-        <div className="mt-4 h-8 md:h-10 overflow-hidden flex items-center justify-center">
-          <span
-            className={`inline-block text-center text-[clamp(18px,3vw,32px)] font-light transition-all duration-[400ms] ease-in-out ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
-            }`}
-          >
-            {slogans[currentIndex]}
-          </span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-sm bg-black/40 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border border-white/10">
+        <div className="mb-6 bg-black/50 rounded-2xl p-6 min-h-[100px] flex items-end justify-end">
+          <div className="text-white text-5xl font-light tracking-wider break-all text-right">
+            {display}
+          </div>
         </div>
-      </main>
-      
-      {/* Start Prompting arrow pointing left - bottom left */}
-      <div className="absolute left-6 md:left-8 bottom-[5%] z-20 flex items-center gap-3 arrow-point-left">
-        <div className="flex items-center gap-2 text-white/80 font-medium text-sm md:text-base">
-          <svg 
-            className="w-5 h-5 md:w-6 md:h-6 animate-bounce-horizontal" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          <span>Start prompting</span>
+
+        <div className="grid grid-cols-4 gap-3">
+          <Button onClick={clear} className="col-span-2 bg-red-500/80 hover:bg-red-500 text-white">
+            AC
+          </Button>
+          <Button onClick={() => performOperation('÷')} className="bg-orange-500/80 hover:bg-orange-500 text-white">
+            ÷
+          </Button>
+          <Button onClick={() => performOperation('×')} className="bg-orange-500/80 hover:bg-orange-500 text-white">
+            ×
+          </Button>
+
+          <Button onClick={() => inputDigit('7')} className="bg-white/10 hover:bg-white/20 text-white">
+            7
+          </Button>
+          <Button onClick={() => inputDigit('8')} className="bg-white/10 hover:bg-white/20 text-white">
+            8
+          </Button>
+          <Button onClick={() => inputDigit('9')} className="bg-white/10 hover:bg-white/20 text-white">
+            9
+          </Button>
+          <Button onClick={() => performOperation('-')} className="bg-orange-500/80 hover:bg-orange-500 text-white">
+            −
+          </Button>
+
+          <Button onClick={() => inputDigit('4')} className="bg-white/10 hover:bg-white/20 text-white">
+            4
+          </Button>
+          <Button onClick={() => inputDigit('5')} className="bg-white/10 hover:bg-white/20 text-white">
+            5
+          </Button>
+          <Button onClick={() => inputDigit('6')} className="bg-white/10 hover:bg-white/20 text-white">
+            6
+          </Button>
+          <Button onClick={() => performOperation('+')} className="bg-orange-500/80 hover:bg-orange-500 text-white">
+            +
+          </Button>
+
+          <Button onClick={() => inputDigit('1')} className="bg-white/10 hover:bg-white/20 text-white">
+            1
+          </Button>
+          <Button onClick={() => inputDigit('2')} className="bg-white/10 hover:bg-white/20 text-white">
+            2
+          </Button>
+          <Button onClick={() => inputDigit('3')} className="bg-white/10 hover:bg-white/20 text-white">
+            3
+          </Button>
+          <Button onClick={handleEquals} className="row-span-2 bg-green-500/80 hover:bg-green-500 text-white">
+            =
+          </Button>
+
+          <Button onClick={() => inputDigit('0')} className="col-span-2 bg-white/10 hover:bg-white/20 text-white">
+            0
+          </Button>
+          <Button onClick={inputDecimal} className="bg-white/10 hover:bg-white/20 text-white">
+            .
+          </Button>
         </div>
       </div>
     </div>
   );
 }
+
