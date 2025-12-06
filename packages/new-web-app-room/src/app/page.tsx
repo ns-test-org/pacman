@@ -146,15 +146,15 @@ export default function Calculator() {
           </Button>
           <Button onClick={() => performOperation('÷')} className={`${
             isLightMode 
-              ? 'bg-orange-500 hover:bg-orange-600 text-white' 
-              : 'bg-orange-500/80 hover:bg-orange-500 text-white'
+              ? 'bg-orange-600 hover:bg-orange-700 text-white' 
+              : 'bg-orange-600/80 hover:bg-orange-600 text-white'
           }`}>
             ÷
           </Button>
           <Button onClick={() => performOperation('×')} className={`${
             isLightMode 
-              ? 'bg-orange-500 hover:bg-orange-600 text-white' 
-              : 'bg-orange-500/80 hover:bg-orange-500 text-white'
+              ? 'bg-orange-600 hover:bg-orange-700 text-white' 
+              : 'bg-orange-600/80 hover:bg-orange-600 text-white'
           }`}>
             ×
           </Button>
@@ -182,8 +182,8 @@ export default function Calculator() {
           </Button>
           <Button onClick={() => performOperation('-')} className={`${
             isLightMode 
-              ? 'bg-orange-500 hover:bg-orange-600 text-white' 
-              : 'bg-orange-500/80 hover:bg-orange-500 text-white'
+              ? 'bg-orange-600 hover:bg-orange-700 text-white' 
+              : 'bg-orange-600/80 hover:bg-orange-600 text-white'
           }`}>
             −
           </Button>
@@ -211,8 +211,8 @@ export default function Calculator() {
           </Button>
           <Button onClick={() => performOperation('+')} className={`${
             isLightMode 
-              ? 'bg-orange-500 hover:bg-orange-600 text-white' 
-              : 'bg-orange-500/80 hover:bg-orange-500 text-white'
+              ? 'bg-orange-600 hover:bg-orange-700 text-white' 
+              : 'bg-orange-600/80 hover:bg-orange-600 text-white'
           }`}>
             +
           </Button>
@@ -265,6 +265,9 @@ export default function Calculator() {
     </div>
   );
 }
+
+
+
 
 
 
