@@ -147,14 +147,14 @@ export default function Calculator() {
           <Button onClick={() => performOperation('÷')} className={`${
             isLightMode 
               ? 'bg-orange-800 hover:bg-orange-900 text-white' 
-              : 'bg-orange-800/80 hover:bg-orange-800 text-white'
+              : 'bg-orange-500/80 hover:bg-orange-500 text-white'
           }`}>
             ÷
           </Button>
           <Button onClick={() => performOperation('×')} className={`${
             isLightMode 
               ? 'bg-orange-800 hover:bg-orange-900 text-white' 
-              : 'bg-orange-800/80 hover:bg-orange-800 text-white'
+              : 'bg-orange-500/80 hover:bg-orange-500 text-white'
           }`}>
             ×
           </Button>
@@ -183,7 +183,7 @@ export default function Calculator() {
           <Button onClick={() => performOperation('-')} className={`${
             isLightMode 
               ? 'bg-orange-800 hover:bg-orange-900 text-white' 
-              : 'bg-orange-800/80 hover:bg-orange-800 text-white'
+              : 'bg-orange-500/80 hover:bg-orange-500 text-white'
           }`}>
             −
           </Button>
@@ -212,7 +212,7 @@ export default function Calculator() {
           <Button onClick={() => performOperation('+')} className={`${
             isLightMode 
               ? 'bg-orange-800 hover:bg-orange-900 text-white' 
-              : 'bg-orange-800/80 hover:bg-orange-800 text-white'
+              : 'bg-orange-500/80 hover:bg-orange-500 text-white'
           }`}>
             +
           </Button>
@@ -265,6 +265,9 @@ export default function Calculator() {
     </div>
   );
 }
+
+
+
 
 
 
