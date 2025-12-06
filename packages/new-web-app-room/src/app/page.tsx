@@ -139,8 +139,8 @@ export default function Calculator() {
         <div className="grid grid-cols-4 gap-3">
           <Button onClick={clear} className={`col-span-2 ${
             isLightMode 
-              ? 'bg-red-500 hover:bg-red-600 text-white' 
-              : 'bg-red-500/80 hover:bg-red-500 text-white'
+              ? 'bg-blue-500 hover:bg-blue-600 text-white' 
+              : 'bg-blue-500/80 hover:bg-blue-500 text-white'
           }`}>
             AC
           </Button>
@@ -265,6 +265,7 @@ export default function Calculator() {
     </div>
   );
 }
+
 
 
 
